@@ -1,0 +1,3 @@
+[submodule "pyrsa"]
+	path = pyrsa
+	url = https://github.com/hibiscustoyou/pyrsa.git
