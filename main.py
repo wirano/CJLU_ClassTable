@@ -168,7 +168,8 @@ class ClassTable(object):
                     '9': timedelta(hours=18, minutes=45), '10': timedelta(hours=19, minutes=35),
                     '11': timedelta(hours=20, minutes=25)}
 
-        payload = 'BEGIN:VCALENDAR\nVERSION:2.0\nCALSCALE:GREGORIAN\nBEGIN:VTIMEZONE\nTZID:Asia/Shanghai\nTZURL:http' \
+        payload = 'BEGIN:VCALENDAR\nPRODID:-//wirano@github//CJLU ClassTable ' \
+                  'Gen//EN\nVERSION:2.0\nCALSCALE:GREGORIAN\nBEGIN:VTIMEZONE\nTZID:Asia/Shanghai\nTZURL:http' \
                   '://tzurl.org/zoneinfo-outlook/Asia/Shanghai\nX-LIC-LOCATION:Asia/Shanghai\nBEGIN:STANDARD' \
                   '\nTZOFFSETFROM:+0800\nTZOFFSETTO:+0800\nTZNAME:CST\nDTSTART:19700101T000000\nEND:STANDARD\nEND' \
                   ':VTIMEZONE'
@@ -221,7 +222,7 @@ def main(argv):
             sys.exit(0)
 
     jw = Jwxt('jwxt.cjlu.edu.cn', s_num, getpass('Enter your password:'))
-    table = jw.dump_class_json(academic_year,term)
+    table = jw.dump_class_json(academic_year, term)
     ct = ClassTable(start_date)
     ct.read_class(table)
     ct.cal_gen(file_name)
