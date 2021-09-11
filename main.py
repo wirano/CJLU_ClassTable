@@ -187,7 +187,7 @@ class ClassTable(object):
                            '\nSUMMARY:' + i['name'] + \
                            '\nLOCATION:' + i['location'] + \
                            '\nDESCRIPTION:' + i['teacher'] + \
-                           '\nBEGIN:VALARM' + '\nTRIGGER:-PT15M' + '\nREPEAT:1' + '\nDURATION:PT1M' + '\nEND:VALARM' + '\nEND:VEVENT '
+                           '\nBEGIN:VALARM' + '\nTRIGGER:-PT15M' + '\nREPEAT:1' + '\nDURATION:PT1M' + '\nEND:VALARM' + '\nEND:VEVENT'
         payload += '\nEND:VCALENDAR'
 
         f = open(file_name, 'w')
