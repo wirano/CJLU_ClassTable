@@ -20,9 +20,9 @@ class Jwxt(object):
         self.__student_number = student_number
         self.session = requests.session()
 
-        self.__csrf_token = self.__get_csrf_token()
+        self.__csrf_token, self.__cookies_route = self.__get_csrf_token()
         self.__modulus, self.__exponent = self.__get_public_key()
-        self.__cookies = self.__get_jsessionid(pwd)
+        self.__jsessionid = self.__get_jsessionid(pwd)
 
     def __get_public_key(self):
         url = f'https://{self.__domain}/xtgl/login_getPublicKey.html'
@@ -65,9 +65,10 @@ class Jwxt(object):
         }
 
         res = self.session.get(url, headers=headers)
+        route = requests.utils.dict_from_cookiejar(res.cookies)
         csrf_line = re.findall(r"value=\"[0-9a-z\-,]+\"", res.text)
         csrf = re.findall(r"[0-9a-z\-,]+", csrf_line[0])
-        return csrf[1]
+        return csrf[1], route
 
     def __get_jsessionid(self, pwd):
         rsakey = RsaKey()
@@ -118,11 +119,11 @@ class Jwxt(object):
             'DNT': '1',
             'Connection': 'keep-alive',
             'Referer': f'https://{self.__domain}/kbcx/xskbcx_cxXskbcxIndex.html?gnmkdm=N2151&layout=default&su={self.__student_number}',
-            'Cookie': f"dptech={self.__cookies['dptech']}; JSESSIONID={self.__cookies['JSESSIONID']}",
+            'Cookie': f"JSESSIONID={self.__jsessionid['JSESSIONID']}; route={self.__cookies_route['route']}",
             'Sec-Fetch-Dest': 'empty',
             'Sec-Fetch-Mode': 'cors',
             'Sec-Fetch-Site': 'same-origin',
-            'Cache-Control': 'max-age=0',
+            'Cache-Control': 'no-cache',
         }
         data = {
             'xnm': academic_year,
